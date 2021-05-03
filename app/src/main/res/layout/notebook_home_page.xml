@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".NotebookHome"
     android:background="@color/primary_color">
 
     <LinearLayout
@@ -91,15 +91,16 @@
                     android:layout_marginTop="20dp">
 
                     <Button
+                        android:id="@+id/goToSettingsBtn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
                         android:layout_weight="1"
                         android:background="@drawable/custom_button"
+                        android:fontFamily="sans-serif-condensed-medium"
                         android:text="Settings"
                         android:textAllCaps="false"
-                        android:textSize="20sp"
-                        android:layout_marginRight="10dp"
-                        android:fontFamily="sans-serif-condensed-medium"/>
+                        android:textSize="20sp" />
 
                     <Button
                         android:id="@+id/addNotebookBtn"
@@ -123,6 +124,12 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@color/black"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/notebook_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
 
     </LinearLayout>
 

@@ -1,7 +1,9 @@
 package csc248.smirn42.NotebookScheduler;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -31,4 +33,5 @@ public class AddNotebook extends AppCompatActivity {
             System.out.println("Checklist");
         }
     }
+
 }

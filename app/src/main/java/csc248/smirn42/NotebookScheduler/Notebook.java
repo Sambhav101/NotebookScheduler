@@ -3,13 +3,13 @@ package csc248.smirn42.NotebookScheduler;
 public class Notebook {
     private int notebookId;
     private String notebookName;
-    private String notebookColor;
+    private int notebookColor;
     private String pictureLocation;
     private boolean isList;
 
 
 
-    public Notebook(int notebookId, String notebookName, String notebookColor, String pictureLocation, boolean isList) {
+    public Notebook(int notebookId, String notebookName, int notebookColor, String pictureLocation, boolean isList) {
         this.notebookId = notebookId;
         this.notebookName = notebookName;
         this.notebookColor = notebookColor;
@@ -36,11 +36,11 @@ public class Notebook {
         this.notebookName = notebookName;
     }
 
-    public String getNotebookColor() {
+    public int getNotebookColor() {
         return notebookColor;
     }
 
-    public void setNotebookColor(String notebookColor) {
+    public void setNotebookColor(int notebookColor) {
         this.notebookColor = notebookColor;
     }
 
@@ -71,4 +71,3 @@ public class Notebook {
                 '}';
     }
 }
-

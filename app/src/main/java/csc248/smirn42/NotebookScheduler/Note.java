@@ -1,7 +1,6 @@
 package csc248.smirn42.NotebookScheduler;
 
 public class Note {
-
     private int noteId;
     private int bookId;
     private String noteText;
