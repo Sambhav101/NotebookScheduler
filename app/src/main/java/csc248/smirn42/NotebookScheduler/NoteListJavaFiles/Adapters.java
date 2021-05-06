@@ -1,12 +1,26 @@
 package csc248.smirn42.NotebookScheduler.NoteListJavaFiles;
 
-public class Adapters {
+import android.content.Context;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
+import csc248.smirn42.NotebookScheduler.NoteListJavaFiles;
+
+public class Adapters extends RecyclerView.Adapter {
 
     private List<ListModel> todoList;
-    private DatabaseHelper db;
+    private databaseHelper db;
     private NoteList activity;
 
-    public Adapter(DatabaseHelper db, NoteList activity) {
+    public Adapters(databaseHelper db, NoteList activity) {
         this.db = db;
         this.activity = activity;
     }
@@ -20,19 +34,24 @@ public class Adapters {
     }
 
     @Override
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+
+    }
+
+    @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         db.openDatabase();
 
         final ListModel item = todoList.get(position);
         holder.task.setText(item.getTask());
-        holder.task.setChecked(toBoolean(item.getStatus()));
+        holder.task.setChecked(toBoolean(item.getTaskStatus()));
         holder.task.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    db.updateStatus(item.getId(), 1);
+                    db.updateStatus(item.getTaskId(), 1);
                 } else {
-                    db.updateStatus(item.getId(), 0);
+                    db.updateStatus(item.getTaskId(), 0);
                 }
             }
         });
@@ -51,14 +70,14 @@ public class Adapters {
         return activity;
     }
 
-    public void setTasks(List<ToDoModel> todoList) {
+    public void setTasks(List<ListModel> todoList) {
         this.todoList = todoList;
         notifyDataSetChanged();
     }
 
     public void deleteItem(int position) {
         ListModel item = todoList.get(position);
-        db.deleteTask(item.getId());
+        db.deleteTask(item.getTaskId());
         todoList.remove(position);
         notifyItemRemoved(position);
     }
@@ -66,11 +85,11 @@ public class Adapters {
     public void editItem(int position) {
        ListModel item = todoList.get(position);
         Bundle bundle = new Bundle();
-        bundle.putInt("id", item.getId());
+        bundle.putInt("id", item.getTaskId());
         bundle.putString("task", item.getTask());
-        AddNewTask fragment = new AddNewTask();
+        NewTask fragment = new NewTask();
         fragment.setArguments(bundle);
-        fragment.show(activity.getSupportFragmentManager(), AddNewTask.TAG);
+        fragment.show(activity.getSupportFragmentManager(), NewTask.TAG);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

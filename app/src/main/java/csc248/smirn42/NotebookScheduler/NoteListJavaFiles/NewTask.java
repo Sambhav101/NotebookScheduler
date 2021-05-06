@@ -1,6 +1,6 @@
 package csc248.smirn42.NotebookScheduler.NoteListJavaFiles;
 
-mport android.app.Activity;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,19 +12,29 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-public class NewTask {
+
+import Adapters;
+import ListModel;
+import csc248.smirn42.NotebookScheduler/DatabaseHandler;
+
+import java.util.Objects;
+
+
+
+public class NewTask BottomSheetDialogFragment {
 
     public static final String TAG = "ActionBottomDialog";
     private EditText newTaskText;
     private Button newTaskSaveButton;
 
-    private DatabaseHandler db;
+    private databaseHelper db;
 
-    public static AddNewTask newInstance(){
+    public static NewTask newInstance(){
         return new AddNewTask();
     }
 
@@ -63,7 +73,7 @@ public class NewTask {
                 newTaskSaveButton.setTextColor(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorPrimaryDark));
         }
 
-        db = new DatabaseHandler(getActivity());
+        db = new dataBaseHelper(getActivity());
         db.openDatabase();
 
         newTaskText.addTextChangedListener(new TextWatcher() {
@@ -97,9 +107,9 @@ public class NewTask {
                     db.updateTask(bundle.getInt("id"), text);
                 }
                 else {
-                    ToDoModel task = new ToDoModel();
+                    ListModel task = new ListModel();
                     task.setTask(text);
-                    task.setStatus(0);
+                    task.setTaskStatus(0);
                     db.insertTask(task);
                 }
                 dismiss();
@@ -111,6 +121,6 @@ public class NewTask {
     public void onDismiss(@NonNull DialogInterface dialog){
         Activity activity = getActivity();
         if(activity instanceof DialogCloseListener)
-            ((DialogCloseListener)activity).handleDialogClose(dialog);
+            ((DialogListener)activity).handleDialogClose(dialog);
     }
 }

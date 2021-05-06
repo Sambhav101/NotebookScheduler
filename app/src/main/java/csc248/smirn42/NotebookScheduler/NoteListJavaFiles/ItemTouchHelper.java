@@ -1,5 +1,5 @@
 package csc248.smirn42.NotebookScheduler.NoteListJavaFiles;
-
+package app/java/csc248.smirn42.NotebookScheduler;
 import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,10 +13,10 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ItemTouchHelper {
-    private ToDoAdapter adapter;
+public class ItemTouchHelper extends ItemTouchHelper.SimpleCallback {
+    private Adapters adapter;
 
-    public ItemTouchHelper(ToDoAdapter adapter) {
+    public ItemTouchHelper(Adapters adapter) {
         super(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT);
         this.adapter = adapter;
     }

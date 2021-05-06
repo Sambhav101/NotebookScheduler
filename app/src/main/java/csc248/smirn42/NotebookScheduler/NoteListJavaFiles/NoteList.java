@@ -15,9 +15,9 @@ import android.widget.Button;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import NoteListJavaFiles/Adapters;
+import Adapters;
 import ListModel;
-import csc248.smim42.NotebookScheduler/DataBaseHelper;
+import csc248.smim42.NotebookScheduler;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,9 +27,9 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Objects;
 
-public class NoteList extends AppCompatActivity implements DialogCloseListener{
+public class NoteList extends AppCompatActivity implements DialogListener{
 
-    private DatabaseHelper db;
+    private databaseHelper db;
 
     private RecyclerView tasksRecyclerView;
     private Adapters tasksAdapter;
@@ -43,29 +43,29 @@ public class NoteList extends AppCompatActivity implements DialogCloseListener{
         setContentView(R.layout.activity_main);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        db = new DatabaseHelper(this);
+        db = new databaseHelper(this);
         db.openDatabase();
 
         tasksRecyclerView = findViewById(R.id.tasksRecyclerView);
         tasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        tasksAdapter = new ToDoAdapter(db,NoteList.this);
+        tasksAdapter = new Adapters(db,NoteList.this);
         tasksRecyclerView.setAdapter(tasksAdapter);
 
         ItemTouchHelper itemTouchHelper = new
-                ItemTouchHelper(new RecyclerItemTouchHelper(tasksAdapter));
+                ItemTouchHelper(new ItemTouchHelper(tasksAdapter));
         itemTouchHelper.attachToRecyclerView(tasksRecyclerView);
 
-        fab = findViewById(R.id.fab);
+        addTask = findViewById(R.id.fab);
 
         taskList = db.getAllTasks();
         Collections.reverse(taskList);
 
         tasksAdapter.setTasks(taskList);
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        addTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddNewTask.newInstance().show(getSupportFragmentManager(), AddNewTask.TAG);
+                NewTask.newInstance().show(getSupportFragmentManager(), NewTask.TAG);
             }
         });
     }
