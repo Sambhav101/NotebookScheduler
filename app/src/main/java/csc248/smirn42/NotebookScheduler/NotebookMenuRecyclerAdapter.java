@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,7 +72,11 @@ public class NotebookMenuRecyclerAdapter extends RecyclerView.Adapter<NotebookMe
                 builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+                        notebookDB = new DataBaseHelper(context);
                         notebookDB.deleteNotebook(thumbnailList.get(position).getNotebookName());
+                        thumbnailList.remove(position);
+                        notifyDataSetChanged();
+                        notifyItemRemoved(position);
                     }
                 });
                 builder.show();
