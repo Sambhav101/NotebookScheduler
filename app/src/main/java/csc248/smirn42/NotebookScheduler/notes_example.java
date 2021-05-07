@@ -33,7 +33,7 @@ public class notes_example extends AppCompatActivity implements DatePickerDialog
         dateText = findViewById(R.id.dateText);
         dueDate = findViewById(R.id.dueDate);
 
-
+        //*************Provide a string for notebook name******************************
         // get notebook name from another activity
         Intent intent = getIntent();
         String str = intent.getStringExtra("notebookName");

@@ -1,7 +1,6 @@
 package csc248.smirn42.NotebookScheduler;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
 public class NoteList extends AppCompatActivity {
