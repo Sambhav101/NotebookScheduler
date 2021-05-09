@@ -1,5 +1,4 @@
-package csc248.smirn42.NotebookScheduler.NoteListJavaFiles;
-
+package csc248.smirn42.NotebookScheduler;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,31 +10,30 @@ import android.widget.CompoundButton;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import csc248.smirn42.NotebookScheduler.NewTask;
+import csc248.smirn42.NotebookScheduler.NoteList;
+import csc248.smirn42.NotebookScheduler.ListModel;
+
+import csc248.smirn42.NotebookScheduler.ListDataBaseHandler;
+
 import java.util.List;
-import csc248.smirn42.NotebookScheduler.NoteListJavaFiles;
 
-public class Adapters extends RecyclerView.Adapter {
-
+public class ListAdapters extends RecyclerView.Adapter<ListAdapters.ViewHolder>{
     private List<ListModel> todoList;
-    private databaseHelper db;
+    private ListDatabaseHandler db;
     private NoteList activity;
 
-    public Adapters(databaseHelper db, NoteList activity) {
+    public ListAdapters(ListDatabaseHandler db, NoteList activity) {
         this.db = db;
         this.activity = activity;
     }
 
-
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.task_layout, parent, false);
+                .inflate(R.layout.new_task, parent, false);
         return new ViewHolder(itemView);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-
     }
 
     @Override
@@ -49,9 +47,9 @@ public class Adapters extends RecyclerView.Adapter {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    db.updateStatus(item.getTaskId(), 1);
+                    db.updateTaskStatus(item.getTaskId(), 1);
                 } else {
-                    db.updateStatus(item.getTaskId(), 0);
+                    db.updateTaskStatus(item.getTaskId(), 0);
                 }
             }
         });
@@ -83,7 +81,7 @@ public class Adapters extends RecyclerView.Adapter {
     }
 
     public void editItem(int position) {
-       ListModel item = todoList.get(position);
+        ListModel item = todoList.get(position);
         Bundle bundle = new Bundle();
         bundle.putInt("id", item.getTaskId());
         bundle.putString("task", item.getTask());
@@ -97,8 +95,7 @@ public class Adapters extends RecyclerView.Adapter {
 
         ViewHolder(View view) {
             super(view);
-            task = view.findViewById(R.id.todoCheckBox);
+            task = view.findViewById(R.id.TaskCheckBox);
         }
     }
-
 }

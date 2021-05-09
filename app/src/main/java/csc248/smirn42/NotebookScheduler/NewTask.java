@@ -1,4 +1,4 @@
-package csc248.smirn42.NotebookScheduler.NoteListJavaFiles;
+package csc248.smirn42.NotebookScheduler;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -14,28 +14,31 @@ import android.widget.Button;
 import android.widget.EditText;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
-import Adapters;
-import ListModel;
-import csc248.smirn42.NotebookScheduler/DatabaseHandler;
+import csc248.smirn42.NotebookScheduler.ListAdapters;
+import csc248.smirn42.NotebookScheduler.ListModel;
+import csc248.smirn42.NotebookScheduler.ListDataBaseHandler;
+
+
 
 import java.util.Objects;
 
 
 
-public class NewTask BottomSheetDialogFragment {
+public class NewTask extends BottomSheetDialogFragment {
 
     public static final String TAG = "ActionBottomDialog";
     private EditText newTaskText;
     private Button newTaskSaveButton;
 
-    private databaseHelper db;
+    private ListDataBaseHelper db;
 
     public static NewTask newInstance(){
-        return new AddNewTask();
+        return new NewTask();
     }
 
     @Override
@@ -58,7 +61,7 @@ public class NewTask BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        newTaskText = Objects.requireNonNull(getView()).findViewById(R.id.newTaskText);
+        newTaskText = Objects.requireNonNull(getView()).findViewById(R.id.emptytask);
         newTaskSaveButton = getView().findViewById(R.id.newTaskButton);
 
         boolean isUpdate = false;
@@ -73,7 +76,7 @@ public class NewTask BottomSheetDialogFragment {
                 newTaskSaveButton.setTextColor(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorPrimaryDark));
         }
 
-        db = new dataBaseHelper(getActivity());
+        db = new ListDataBaseHelper(getActivity());
         db.openDatabase();
 
         newTaskText.addTextChangedListener(new TextWatcher() {

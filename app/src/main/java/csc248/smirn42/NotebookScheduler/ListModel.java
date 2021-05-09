@@ -1,4 +1,4 @@
-package csc248.smirn42.NotebookScheduler.NoteListJavaFiles;
+package csc248.smirn42.NotebookScheduler;
 
 public class ListModel {
 
@@ -29,3 +29,4 @@ public class ListModel {
         this.task = task;
     }
 }
+
