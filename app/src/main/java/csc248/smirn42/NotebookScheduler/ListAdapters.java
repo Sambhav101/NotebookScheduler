@@ -19,11 +19,11 @@ import csc248.smirn42.NotebookScheduler.ListDataBaseHandler;
 import java.util.List;
 
 public class ListAdapters extends RecyclerView.Adapter<ListAdapters.ViewHolder>{
-    private List<ListModel> todoList;
+    private List<ListModel> checkList;
     private ListDatabaseHandler db;
     private NoteList activity;
 
-    public ListAdapters(ListDatabaseHandler db, NoteList activity) {
+    public ListAdapters(ListDataBaseHandler db, NoteList activity) {
         this.db = db;
         this.activity = activity;
     }
@@ -40,7 +40,7 @@ public class ListAdapters extends RecyclerView.Adapter<ListAdapters.ViewHolder>{
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         db.openDatabase();
 
-        final ListModel item = todoList.get(position);
+        final ListModel item = checkList.get(position);
         holder.task.setText(item.getTask());
         holder.task.setChecked(toBoolean(item.getTaskStatus()));
         holder.task.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -61,7 +61,7 @@ public class ListAdapters extends RecyclerView.Adapter<ListAdapters.ViewHolder>{
 
     @Override
     public int getItemCount() {
-        return todoList.size();
+        return checkList.size();
     }
 
     public Context getContext() {
@@ -69,19 +69,19 @@ public class ListAdapters extends RecyclerView.Adapter<ListAdapters.ViewHolder>{
     }
 
     public void setTasks(List<ListModel> todoList) {
-        this.todoList = todoList;
+        this.checkList = todoList;
         notifyDataSetChanged();
     }
 
     public void deleteItem(int position) {
-        ListModel item = todoList.get(position);
+        ListModel item = checkList.get(position);
         db.deleteTask(item.getTaskId());
-        todoList.remove(position);
+        checkList.remove(position);
         notifyItemRemoved(position);
     }
 
     public void editItem(int position) {
-        ListModel item = todoList.get(position);
+        ListModel item = checkList.get(position);
         Bundle bundle = new Bundle();
         bundle.putInt("id", item.getTaskId());
         bundle.putString("task", item.getTask());

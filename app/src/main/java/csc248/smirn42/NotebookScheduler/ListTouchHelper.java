@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-package csc248.smirn42.NotebookScheduler.ListAdapters;
+import csc248.smirn42.NotebookScheduler.ListAdapters;
 
 public class ListTouchHelper extends ItemTouchHelper.SimpleCallback{
     private ListAdapters adapter;

@@ -6,9 +6,12 @@ import android.view.View;
 import android.widget.Button;
 import csc248.smirn42.NotebookScheduler.ListAdapters;
 import csc248.smirn42.NotebookScheduler.ListModel;
-package csc248.smirn42.NotebookScheduler.ListDataBaseHandler;
+import csc248.smirn42.NotebookScheduler.ListDataBaseHandler;
 
 
+import android.content.DialogInterface;
+import android.os.AsyncTask;
+import android.os.Bundle;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +23,7 @@ import java.util.Objects;
 
 public class NoteList extends AppCompatActivity implements ListDialogListener {
 
-    private DataBaseHelper db;
+    private ListDataBaseHandler db;
 
     private RecyclerView tasksRecyclerView;
     private ListAdapters tasksAdapter;
@@ -45,19 +48,19 @@ public class NoteList extends AppCompatActivity implements ListDialogListener {
 
         });
 
-        db = new DataBaseHelper(this);
+        db = new ListDataBaseHandler(this);
         db.openDatabase();
 
         tasksRecyclerView = findViewById(R.id.tasksRecyclerView);
         tasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        tasksAdapter = new ListAdapters(db,csc248.smirn42.NotebookScheduler.NoteList.this);
+        tasksAdapter = new ListAdapters(db,NoteList.this);
         tasksRecyclerView.setAdapter(tasksAdapter);
 
         ItemTouchHelper itemTouchHelper = new
-                ItemTouchHelper(new ItemTouchHelper(tasksAdapter));
+                ItemTouchHelper(new ListTouchHelper(tasksAdapter));
         itemTouchHelper.attachToRecyclerView(tasksRecyclerView);
 
-        addTask = findViewById(R.id.new);
+        addTask = findViewById(R.id.addTask);
 
         taskList = db.getAllTasks();
         Collections.reverse(taskList);
@@ -79,6 +82,8 @@ public class NoteList extends AppCompatActivity implements ListDialogListener {
         tasksAdapter.setTasks(taskList);
         tasksAdapter.notifyDataSetChanged();
     }
+
+
 }
 
 

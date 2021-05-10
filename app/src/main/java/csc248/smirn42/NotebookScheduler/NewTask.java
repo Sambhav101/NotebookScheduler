@@ -35,7 +35,7 @@ public class NewTask extends BottomSheetDialogFragment {
     private EditText newTaskText;
     private Button newTaskSaveButton;
 
-    private ListDataBaseHelper db;
+    private ListDataBaseHandler db;
 
     public static NewTask newInstance(){
         return new NewTask();
@@ -72,11 +72,11 @@ public class NewTask extends BottomSheetDialogFragment {
             String task = bundle.getString("task");
             newTaskText.setText(task);
             assert task != null;
-            if(task.length()>0)
+            if(task.length() > 0)
                 newTaskSaveButton.setTextColor(ContextCompat.getColor(Objects.requireNonNull(getContext()), R.color.colorPrimaryDark));
         }
 
-        db = new ListDataBaseHelper(getActivity());
+        db = new ListDataBaseHandler(getActivity());
         db.openDatabase();
 
         newTaskText.addTextChangedListener(new TextWatcher() {
@@ -123,7 +123,7 @@ public class NewTask extends BottomSheetDialogFragment {
     @Override
     public void onDismiss(@NonNull DialogInterface dialog){
         Activity activity = getActivity();
-        if(activity instanceof DialogCloseListener)
-            ((DialogListener)activity).handleDialogClose(dialog);
+        if(activity instanceof ListDialogListener)
+            ((ListDialogListener)activity).handleDialogClose(dialog);
     }
 }

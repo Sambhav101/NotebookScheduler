@@ -93,5 +93,5 @@ public class ListDataBaseHandler extends SQLiteOpenHelper{
         public void deleteTask(int id){
             db.delete(TODO_TABLE, ID + "= ?", new String[] {String.valueOf(id)});
         }
-    }
+
 }

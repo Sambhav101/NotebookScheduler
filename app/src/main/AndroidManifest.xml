@@ -17,8 +17,6 @@
             </intent-filter>
         </activity>
 
-        </activity>
-
         <activity android:name=".CalendarActivity">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
