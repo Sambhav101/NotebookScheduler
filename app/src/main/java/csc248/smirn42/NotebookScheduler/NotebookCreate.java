@@ -15,10 +15,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class NotebookCreate extends AppCompatActivity {
 
-    View selectedColor;
-    RadioButton rBlue,  rGreen, rYellow, rHotPink, rOrange, rCayan, rRed, rPurple, rWhite, rBlack, rGray, rBiege;
-    boolean noteIsList = true;
-    int color = R.color.blue;
+    private View selectedColor;
+    private RadioButton rBlue,  rGreen, rYellow, rHotPink, rOrange, rCayan, rRed, rPurple, rWhite, rBlack, rGray, rBiege;
+    private boolean noteIsList = false;
+    private int color = R.color.blue;
     private DataBaseHelper dbhelper;
 
     @Override
@@ -28,19 +28,12 @@ public class NotebookCreate extends AppCompatActivity {
 
         dbhelper = new DataBaseHelper(this);
 
-        Button cancelBtn = findViewById(R.id.cancel_btn);
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cancel();
-            }
-        });
-
         Button okBtn = findViewById(R.id.ok_btn);
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 newNotebook();
+                cancel();
             }
         });
     }
@@ -52,17 +45,12 @@ public class NotebookCreate extends AppCompatActivity {
 
     public void checkInput(View view) {
         RadioButton note = findViewById(R.id.note_selection);
-
         if(note.isChecked()) {
             noteIsList = false;
         } else {
             noteIsList = true;
         }
         System.out.println(noteIsList);
-    }
-
-    public boolean isList() {
-        return noteIsList;
     }
 
     public void selectedColor(View view) {
@@ -112,42 +100,22 @@ public class NotebookCreate extends AppCompatActivity {
     }
 
     public void newNotebook() {
-
-// Commented out, database should not be accessed directly - DF
-//        SQLiteDatabase database = dbhelper.getReadableDatabase();
-
         EditText notebookNameInput = findViewById(R.id.notebook_name);
-
         String notebookName = notebookNameInput.getText().toString();
 
         if(notebookName.matches("")) {
             Toast.makeText(this, "Notebook name can't be empty", Toast.LENGTH_SHORT).show();
         } else {
-
-// Added proper addNotebook method - DF
-            Notebook notebook = new Notebook(-1, notebookName, color, "", isList());
+            Notebook notebook = new Notebook(-1, notebookName, color, "", noteIsList);
             boolean success = dbhelper.addNotebook(notebook);
+            System.out.println(noteIsList);
             if(!success){
                 Toast.makeText(this, "Notebook already exists!", Toast.LENGTH_SHORT).show();
             }else {
                 Toast.makeText(this, "Notebook " + notebookName + " created", Toast.LENGTH_SHORT).show();
                 notebookNameInput.getText().clear();
             }
-
-//Commented out, database should not be accessed directly
-//            ContentValues contentValues = new ContentValues();
-//            contentValues.put(dbhelper.COLUMN_NOTEBOOK_NAME, notebookName);
-//            contentValues.put(dbhelper.COLUMN_IS_LIST, isList());
-//            contentValues.put(dbhelper.COLUMN_NOTEBOOK_COLOR, color);
-//
-//            database.insert(dbhelper.NOTEBOOK_TABLE, null, contentValues);
-//            dbhelper.close();
-
-//            Toast.makeText(this, "Notebook " + notebookName + " created", Toast.LENGTH_SHORT).show();
-//            notebookNameInput.getText().clear();
-
         }
-
         Note note = new Note(-1,
                 dbhelper.notebookNameToNotebookId(notebookName),
                 "",
