@@ -28,7 +28,8 @@ public class NoteList extends AppCompatActivity implements ListDialogListener {
     private RecyclerView tasksRecyclerView;
     private ListAdapters tasksAdapter;
     private Button addTask;
-
+    private Button toCale;
+    private Button clearAll;
     private List<ListModel> taskList;
 
     @Override
@@ -38,15 +39,26 @@ public class NoteList extends AppCompatActivity implements ListDialogListener {
         Objects.requireNonNull(getSupportActionBar()).hide();
 
 
-        Button toSchool= (Button) findViewById(R.id.addTask);
+        //click button to Calender page
+        Button toChris= (Button) findViewById(R.id.toCal);
 
-        toSchool.setOnClickListener(new View.OnClickListener() {
+        toChris.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
-                startActivity(new Intent(csc248.smirn42.NotebookScheduler.NoteList.this, notes_example.class));
+                startActivity(new Intent(NoteList.this, CalendarActivity.class));
             }
-
         });
+        //click button to delete all checked items from the page
+//        Button toChris= (Button) findViewById(R.id.chrisPageB);
+//
+//        toChris.setOnClickListener(new View.OnClickListener() {
+//
+//            public void onClick(View v) {
+//                startActivity(new Intent(BarryActivity.this, ChrisActivity.class));
+//            }
+//        });
+
+
 
         db = new ListDataBaseHandler(this);
         db.openDatabase();
@@ -67,6 +79,7 @@ public class NoteList extends AppCompatActivity implements ListDialogListener {
 
         tasksAdapter.setTasks(taskList);
 
+        //add task button
         addTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
